@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Xavier Pazos | Engineering Portfolio</title>
+<meta name="description" content="Flight electronics and ground test hardware from my 2026 internship at iRocket: two rocket telemetry boards, and the data acquisition and ignition system for a solid rocket motor test stand.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Xavier Pazos | Engineering Portfolio">
+<meta property="og:description" content="Flight electronics and ground test hardware from my 2026 internship at iRocket: two rocket telemetry boards, and the data acquisition and ignition system for a solid rocket motor test stand.">
+<meta property="og:url" content="https://xavier-2714.github.io/pazos_portfolio/">
+<meta property="og:image" content="https://xavier-2714.github.io/pazos_portfolio/img/telemetry-40mm-assembled.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+html, body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+/* Layout: the PDF's letter pages rebuilt as white sheets on a pale desk (cover, then one sheet per project).
+   Same type and color as the PDF: Arial, navy heads and rules, slate meta, tinted spec tables.
+   Deliberately a single light "paper" look to match the PDF. Arimo only loads where Arial is missing. */
+:root {
+  --desk: #e6eaf0;
+  --sheet: #ffffff;
+  --ink: #1a1a1a;
+  --navy: #1f3a5f;
+  --slate: #5f6b7a;
+  --link: #1155cc;
+  --cell: #eef2f7;
+  --grid: #d0d7e1;
+  --shadow: rgba(31, 58, 95, 0.13);
+  --scrim: rgba(12, 22, 36, 0.88);
+  --font-doc: Arial, Arimo, "Helvetica Neue", Helvetica, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font: 400 1rem/1.4 var(--font-doc);
+}
+p { margin: 0; }
+a {
+  color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+a:focus-visible,
+.js [data-zoom]:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+
+/* Desk and sheets */
+.desk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding-block: 2.5rem 4rem;
+  padding-inline: 1rem;
+}
+.sheet {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 57rem;
+  background: var(--sheet);
+  box-shadow: 0 1px 2px var(--shadow), 0 6px 24px var(--shadow);
+  padding: clamp(1.75rem, 5vw, 3.25rem) clamp(1.25rem, 6.5vw, 4.25rem) clamp(2rem, 5.5vw, 3.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  scroll-margin-top: 1rem;
+}
+
+/* Cover */
+.masthead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 3px solid var(--navy);
+}
+.masthead h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: var(--navy);
+}
+.subtitle {
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: var(--slate);
+}
+.contact {
+  padding-top: 0.35rem;
+  font-size: 0.95rem;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem;
+  padding-block: 0.75rem;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  color: inherit;
+  text-decoration: none;
+}
+.thumb {
+  display: block;
+  aspect-ratio: 1.45;
+  max-width: 100%;
+  overflow: hidden;
+}
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb img.round { object-fit: contain; }
+.card-title {
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--navy);
+}
+.card:hover .card-title {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.card-text {
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--slate);
+}
+
+/* Shared blocks */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.label {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.runin {
+  font-weight: 700;
+  color: var(--navy);
+}
+.project-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.project-head h2 {
+  margin: 0;
+  padding-bottom: 0.3rem;
+  border-bottom: 3px solid var(--navy);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--navy);
+  text-wrap: balance;
+}
+.meta {
+  font-size: 0.95rem;
+  color: var(--slate);
+}
+.sub {
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.25;
+  color: var(--navy);
+}
+
+/* Figures */
+.fig {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.fig figcaption {
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--slate);
+}
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap, 3rem);
+  width: 100%;
+  max-width: var(--max, 100%);
+  margin-inline: auto;
+}
+.row img {
+  display: block;
+  flex: var(--ar) 1 0%;
+  min-width: 0;
+  height: auto;
+}
+.solo {
+  display: block;
+  width: 100%;
+  max-width: var(--max, 100%);
+  height: auto;
+  margin-inline: auto;
+}
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 1.25rem 2rem;
+  align-items: start;
+}
+.split .fig figcaption { text-align: left; }
+.split-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+/* Lists: navy bullets, en-dash sub-bullets, as in the PDF */
+.bullets,
+.bullets ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.8em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.bullets ul {
+  padding-left: 2.7em;
+  margin-top: 0.35rem;
+}
+.bullets li { position: relative; }
+.bullets li::before {
+  content: "•";
+  position: absolute;
+  left: -1.27em;
+  color: var(--navy);
+}
+.bullets ul li::before { content: "–"; }
+
+/* Spec tables */
+.specs {
+  display: grid;
+  grid-template-columns: minmax(max-content, 17fr) minmax(0, 33fr) minmax(max-content, 17fr) minmax(0, 33fr);
+  margin: 0;
+  border-top: 1px solid var(--grid);
+  border-left: 1px solid var(--grid);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+.specs dt,
+.specs dd {
+  margin: 0;
+  padding: 0.4rem 0.55rem;
+  border-right: 1px solid var(--grid);
+  border-bottom: 1px solid var(--grid);
+}
+.specs dt {
+  background: var(--cell);
+  font-weight: 700;
+  color: var(--navy);
+}
+.specs dd { overflow-wrap: anywhere; }
+.specs--rows {
+  grid-template-columns: minmax(max-content, 22fr) minmax(0, 78fr);
+  font-size: 1rem;
+}
+
+/* Image zoom */
+.js [data-zoom] { cursor: zoom-in; }
+.zoom {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: 96vw;
+  max-height: 96vh;
+  overflow: visible;
+}
+.zoom::backdrop { background: var(--scrim, rgba(12, 22, 36, 0.88)); }
+.zoom img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 96vw;
+  max-height: 92vh;
+  background: var(--sheet);
+  cursor: zoom-out;
+}
+
+/* Phone: drop the sheet framing, keep the same type and order */
+@media (max-width: 700px) {
+  body { background: var(--sheet); }
+  .desk {
+    gap: 3.25rem;
+    padding-block: 1.5rem 3rem;
+  }
+  .sheet {
+    box-shadow: none;
+    padding: 0;
+  }
+  .masthead h1 { font-size: 2.1rem; }
+  .project-head h2 { font-size: 1.4rem; }
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.1rem;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 0.9rem;
+    row-gap: 0.2rem;
+    align-items: start;
+  }
+  .thumb { grid-row: 1 / span 2; }
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .specs,
+  .specs--rows { grid-template-columns: minmax(max-content, 34fr) minmax(0, 66fr); }
+  .specs .pad { display: none; }
+}
+</style>
+</head>
+<body>
+<main class="desk">
+
+  <article class="sheet" id="top" aria-labelledby="name">
+    <header class="masthead">
+      <h1 id="name">Xavier Pazos</h1>
+      <p class="subtitle">Engineering Portfolio</p>
+      <p class="contact">Cornell University · B.A. Physics (Astronomy), May 2027 · xap4@cornell.edu · <a href="https://www.linkedin.com/in/xavier-pazos-381b0330a/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+    </header>
+
+    <p>Flight electronics and ground test hardware from my 2026 internship at iRocket: two rocket telemetry boards, and the data acquisition and ignition system for a solid rocket motor test stand.</p>
+
+    <nav class="cards" aria-label="Projects">
+      <a class="card" href="#telemetry-70mm">
+        <span class="thumb"><img class="round" src="img/telemetry-70mm-top-copper.jpg" width="900" height="900" alt=""></span>
+        <span class="card-title">Telemetry PCB – 70 mm Rocket</span>
+        <span class="card-text">Ø62 mm, 4-layer board designed to survive 32 rps of spin and 100 g.</span>
+      </a>
+      <a class="card" href="#telemetry-40mm">
+        <span class="thumb"><img src="img/telemetry-40mm-assembled.jpg" width="1200" height="832" alt=""></span>
+        <span class="card-title">Telemetry PCB – 40 mm Rocket</span>
+        <span class="card-text">71 × 32.4 mm, 4-layer flight board with GPS, IMU, barometer and radio. Built and brought up.</span>
+      </a>
+      <a class="card" href="#test-stand">
+        <span class="thumb"><img src="img/ignition-box.jpg" width="1200" height="673" alt=""></span>
+        <span class="card-title">Test Stand DAQ + Ignition</span>
+        <span class="card-text">Field DAQ and isolated ignition box for a 40 mm solid motor. Demoed to investors.</span>
+      </a>
+    </nav>
+
+    <section class="block" aria-labelledby="tools">
+      <h2 class="label" id="tools">Tools</h2>
+      <p>KiCad (schematic, 4-layer layout, fab packages) · STM32CubeMX · Python · hand soldering and hot-air rework · JLCPCB fabrication and assembly</p>
+    </section>
+
+    <section class="block" aria-labelledby="other">
+      <h2 class="label" id="other">Other projects</h2>
+      <div class="prose">
+        <p><span class="runin">Voice-Controlled Coffee Machine.</span> Order coffee by voice. A Raspberry Pi with a speaker and mic sends the order to the Grok API, then sends a pour command to a custom PCB that controls the valve, by measuring weight from a load cell, and pouring to 8oz, 12oz, or 16oz for a small, medium, or large.</p>
+        <p>Link: <a href="https://youtu.be/d5Ef00w-l6k" target="_blank" rel="noopener noreferrer">https://youtu.be/d5Ef00w-l6k</a></p>
+        <p><span class="runin">ALICE – DNHacks, Best in Design.</span> A Raspberry Pi running ML models we trained that checks local AI agents managing a simulated server rack during a cloud outage.</p>
+        <p>Link: <a href="https://portal.dnhacks.org/e/2026/showcase/alice" target="_blank" rel="noopener noreferrer">https://portal.dnhacks.org/e/2026/showcase/alice</a></p>
+      </div>
+    </section>
+  </article>
+
+  <article class="sheet" id="telemetry-70mm" aria-labelledby="telemetry-70mm-title">
+    <header class="project-head">
+      <h2 id="telemetry-70mm-title">Telemetry PCB – 70 mm Rocket</h2>
+      <p class="meta">iRocket · Summer 2026 · Status: prepared for fabrication</p>
+    </header>
+
+    <figure class="fig">
+      <div class="row" style="--max: 36rem; --gap: 5rem;">
+        <img data-zoom style="--ar: 1;" src="img/telemetry-70mm-top-copper.jpg" width="900" height="900" loading="lazy" alt="KiCad render of the round 62 mm telemetry board, top copper">
+        <img data-zoom style="--ar: 1;" src="img/telemetry-70mm-all-layers.jpg" width="900" height="900" loading="lazy" alt="KiCad render of the same board with all four layers shown">
+      </div>
+      <figcaption>Top copper (left) and all layers (right). Ø62 mm, 4 layers, KiCad.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Telemetry board for a 70 mm rocket. It streams GPS, 3-axis acceleration and roll rate to the ground over a 900 MHz radio link, and is designed to survive 32 rps of spin and 100 g of acceleration.</p>
+      <p>I designed this board on my own. I defined the environment it had to survive from publicly available specs for the rocket, chose parts around those limits, did the schematic and 4-layer layout in KiCad, and prepared it for fabrication. It was handed off at fabrication when my internship ended.</p>
+    </div>
+
+    <section class="block" aria-labelledby="t70-parts">
+      <h3 class="label" id="t70-parts">Key parts</h3>
+      <dl class="specs">
+        <dt>MCU</dt><dd>STM32F405</dd>
+        <dt>Accelerometer</dt><dd>ADXL314 (3-axis, ±200 g, digital)</dd>
+        <dt>Gyroscope</dt><dd>ADXRS649 (1-axis, ±20,000 °/s, analog)</dd>
+        <dt>ADC</dt><dd>ADS8353 (16-bit, dual SAR)</dd>
+        <dt>GPS</dt><dd>u-blox MAX-M10S + patch antenna</dd>
+        <dt>Radio</dt><dd>Digi XBee XR 900</dd>
+        <dt>Power</dt><dd>3.7 V LiPo, micro-USB charging</dd>
+        <dt class="pad" aria-hidden="true"></dt><dd class="pad" aria-hidden="true"></dd>
+      </dl>
+    </section>
+
+    <section class="block" aria-labelledby="t70-decisions">
+      <h3 class="label" id="t70-decisions">Design decisions</h3>
+      <ul class="bullets" role="list">
+        <li>Circular PCB that sits perpendicular to the rocket's flight path:
+          <ul role="list">
+            <li>The gyroscope measures yaw relative to the chip, which becomes the rocket's roll when the board sits this way. 32 rps is about 11,500 °/s, well within its ±20,000 °/s range.</li>
+            <li>Parts won't instantly shear off under the drastic acceleration. The 100 g load presses components into the board, not sideways across their solder joints.</li>
+          </ul>
+        </li>
+        <li>The accelerometer is placed about 6 mm from the center of the board. Spin adds a ~26 g offset there, which is fine within its ±200 g range.</li>
+        <li>Mounting hole directly next to the accelerometer to prevent false readings from vibration. It ties the sensor rigidly to the airframe, so board flex doesn't show up as acceleration.</li>
+        <li>900 MHz quarter-wave monopole aligned with the exact center of the PCB, on the spin axis, to prevent fade-out. Fed by coax, with a link budget that should give about +22 dB of margin at 10 km.</li>
+        <li>The entire analog signal chain: gyro output → 2.2 kHz anti-aliasing filter → op-amp buffer → 16-bit ADC. The gyro and ADC run on their own clean 5 V rail (boost converter → low-noise regulator).</li>
+        <li>Left out a 3-axis gyro. I couldn't find a model rated to 20,000 °/s on three axes, and even the best gyros have cross-axis leakage, so the roll would leak into yaw and pitch and swamp their real readings.</li>
+        <li>Two inner GND planes give the long SPI runs a continuous return path. The only cost was routing power by hand as traces.</li>
+        <li>Power built for spin: soldered battery leads (a JST connector is too weak under these loads), and the PWR switch's ON position is closest to the edge so spinning holds it ON instead of switching it off. Micro-USB charging and the switch mean the board doesn't constantly drain the battery.</li>
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="t70-change">
+      <h3 class="label" id="t70-change">What I'd change</h3>
+      <ul class="bullets" role="list">
+        <li>More debug points. Tough to fit, since this board is so crowded.</li>
+        <li>Move the GPS patch antenna closer to the middle, or at least heavily stake it down. It's a heavy component and sees about 80 g outward where it sits; I think at 32 rps it could shear off.</li>
+        <li>A magnetic switch for power, so the board can be turned on and off while it's mounted in the rocket.</li>
+      </ul>
+    </section>
+  </article>
+
+  <article class="sheet" id="telemetry-40mm" aria-labelledby="telemetry-40mm-title">
+    <header class="project-head">
+      <h2 id="telemetry-40mm-title">Telemetry PCB – 40 mm Rocket</h2>
+      <p class="meta">iRocket · Summer 2026</p>
+    </header>
+
+    <figure class="fig">
+      <div class="row" style="--max: 46rem; --gap: 3rem;">
+        <img data-zoom style="--ar: 2.205;" src="img/telemetry-40mm-layout.jpg" width="1400" height="635" loading="lazy" alt="PCB layout of the 71 × 32.4 mm telemetry board">
+        <img data-zoom style="--ar: 1.442;" src="img/telemetry-40mm-assembled.jpg" width="1200" height="832" loading="lazy" alt="The assembled telemetry board with its radio and GPS antenna cable">
+      </div>
+      <figcaption>Layout (left) and the assembled board (right), with the XBee radio hand-soldered. 71 × 32.4 mm, 4 layers.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Flight board for a 40 mm rocket: GPS, a 6-axis IMU, a barometer and flash logging, with a 900 MHz radio link. Its mission is milder than the 70 mm rocket's (about 17 g peak and minimal spin). I designed it before the 70 mm board, and its MCU, GPS front end, radio and power parts carried over to that design.</p>
+      <p>I chose what measurements were needed and what sensors could record them, did the schematic and PCB routing, and prepared it for fabrication. I helped bring the board up, flashing it with STM32CubeMX and a Nucleo as the ST-Link programmer, and started bench testing and distance testing.</p>
+    </div>
+
+    <section class="block" aria-labelledby="t40-parts">
+      <h3 class="label" id="t40-parts">Key parts</h3>
+      <dl class="specs">
+        <dt>MCU</dt><dd>STM32F405</dd>
+        <dt>IMU</dt><dd>Bosch BMI088 (±24 g, 1.4× margin over the 17 g peak)</dd>
+        <dt>Barometer</dt><dd>TE MS5607</dd>
+        <dt>Flash</dt><dd>W25Q128 (16 MB)</dd>
+        <dt>GPS</dt><dd>u-blox MAX-M10S + external SAW filter + patch antenna</dd>
+        <dt>Radio</dt><dd>Digi XBee XR 900 (u.FL)</dd>
+        <dt>Power</dt><dd>TPS63001 buck-boost; 1S LiPo or USB</dd>
+        <dt class="pad" aria-hidden="true"></dt><dd class="pad" aria-hidden="true"></dd>
+      </dl>
+    </section>
+
+    <section class="block" aria-labelledby="t40-decisions">
+      <h3 class="label" id="t40-decisions">Design decisions</h3>
+      <ul class="bullets" role="list">
+        <li>Calculated the necessary width of an impedance trace, and used it to route from the antenna through the SAW filter into the physical GPS module.</li>
+        <li>Modeled the GPS + SAW + Antenna very closely to Altus Metrum’s TeleMega. The datasheet specifies a need for an unobstructed ground plane a size that was not possible on my small board. I researched boards that were flight proven, yet also utilized a very small size, found the Altus Metrum TeleMega, and very closely matched their design.</li>
+        <li>Audited the antenna footprint against the datasheet, dimension by dimension, and caught a feed hole (0.94 mm) too small for the pin at max tolerance (0.95 mm). Fixed it to 1.0 mm before ordering.</li>
+        <li>Everything was machine-assembled except the radio and patch antenna, which I soldered myself.</li>
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="t40-results">
+      <h3 class="label" id="t40-results">Results</h3>
+      <div class="prose">
+        <p>Bench tested: Baro resolved altitude changes down to about a foot. Standard acceleration data matched the 1g of acceleration, and tilting distributed the 1g across 3 axes. Took it to the beach (most flat and unobstructed piece of land I could find in Long Island) and range tested it to ~2 miles. Experienced little to no packet loss in areas with little obstruction; all sensors read reasonable results throughout.</p>
+        <p>Video: <a href="https://youtu.be/FYIkT8Vz3lQ" target="_blank" rel="noopener noreferrer">https://youtu.be/FYIkT8Vz3lQ</a></p>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="t40-change">
+      <h3 class="label" id="t40-change">What I'd change</h3>
+      <ul class="bullets" role="list">
+        <li>I had to hand-solder the Digi XBee XR 900. I wish I had left a bit more room on the more central side; it made for a difficult solder job.</li>
+        <li>Cold restart for GPS, so if it loses power, it takes over 40s to regain a link.</li>
+        <li>External clock traces were not length matched–didn’t end up affecting bring up or initial testing, but good practice to have them match.</li>
+        <li>No power switch, so if the battery is connected it will continue to drain battery life.</li>
+      </ul>
+    </section>
+  </article>
+
+  <article class="sheet" id="test-stand" aria-labelledby="test-stand-title">
+    <header class="project-head">
+      <h2 id="test-stand-title">Solid Motor Test Stand: DAQ + Ignition Box</h2>
+      <p class="meta">iRocket · May – July 2026 · Built and demoed to investors</p>
+    </header>
+
+    <figure class="fig">
+      <img class="solo" data-zoom style="--max: 26rem;" src="img/daq-lab.jpg" width="1400" height="1050" loading="lazy" alt="Lab bench with the DAQ enclosure mounted at the top right">
+      <figcaption>The DAQ enclosure (top right) in the lab, before being fully cleaned up. I ordered and assembled the entire lab setup.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Field-portable DAQ box for a 40 mm solid rocket motor test stand. It measures thrust and case temperature through a burn, in the desert, with the operator about 60 ft away.</p>
+      <p>I designed, specified, sourced, wired and assembled the entire box, and built the ignition box that goes with it.</p>
+    </div>
+
+    <section class="block" aria-labelledby="ts-system">
+      <h3 class="label" id="ts-system">System</h3>
+      <dl class="specs specs--rows">
+        <dt>Thrust</dt><dd>Load cell (full bridge, 2 mV/V) → Dataforth DSCA38-02 signal conditioner → MCC USB-1608G</dd>
+        <dt>Temperature</dt><dd>Up to 8 thermocouples → MCC USB-2408-2AO (24-bit, built-in cold-junction compensation)</dd>
+        <dt>Ignition event</dt><dd>DPST fire button; second pole → DAQ digital input</dd>
+        <dt>Enclosure</dt><dd>Fiberglass/polyester, 430 × 330 × 200 mm, two DIN rails, Wago spring terminal blocks</dd>
+        <dt>Power</dt><dd>12 V battery + boost converter</dd>
+        <dt>Link to operator</dt><dd>USB-over-Ethernet extender, ~60 ft to the laptop</dd>
+        <dt>Budget</dt><dd>~$3,500</dd>
+      </dl>
+    </section>
+
+    <section class="block" aria-labelledby="ts-decisions">
+      <h3 class="label" id="ts-decisions">Design decisions</h3>
+      <ul class="bullets" role="list">
+        <li>Two DAQ modules, not one. I was inspired by NI's approach of separate modules divided by function. Thrust is a much faster measurement than temperature and needs very different signal conditioning.</li>
+        <li>Dataforth signal conditioner for the load cell. It powers the load cell, amplifies its millivolt-level signal about 330× (±30 mV in, ±10 V out), and isolates it from the test stand.</li>
+        <li>100 kΩ pull-down resistor from SIG− to GND at the USB-1608G. The DSCA is isolated, so its voltage can float relative to the DAQ and drift out of the DAQ's input range. The resistor holds it near the DAQ's ground without undoing the isolation.</li>
+        <li>Built to expand to 8 thermocouples and 5–6 load cells plus pressure transducers.</li>
+        <li>Grounded everything at one single point (star ground), bonded to a ground stake driven into the earth.</li>
+        <li>DC power from a 12 V battery: way easier to test with and a lot safer than AC.</li>
+        <li>Software: logging begins before ignition. Pressing the fire button leaves a timestamp in the data, but that marks the button press, not the true ignition, which shows up as a spike across all the measured data.</li>
+      </ul>
+    </section>
+
+    <figure class="fig">
+      <img class="solo" data-zoom style="--max: 44rem;" src="img/daq-wiring-diagram.jpg" width="1396" height="1108" loading="lazy" alt="Wiring diagram of the DAQ enclosure and the ignition circuit as built">
+      <figcaption>Wiring diagram as built. I also drew a scaled-up version with AC power, 8 thermocouples, a pressure transducer and a fan for future expansion.</figcaption>
+    </figure>
+
+    <section class="block" id="ignition-box" aria-labelledby="ignition-box-title">
+      <h3 class="sub" id="ignition-box-title">Ignition Box</h3>
+      <div class="split">
+        <figure class="fig">
+          <img class="solo" data-zoom src="img/ignition-box.jpg" width="1200" height="673" loading="lazy" alt="Ignition box lid with the arm key switch, green armed light and red fire button">
+          <figcaption>Arm key, armed light and fire button.</figcaption>
+        </figure>
+        <div class="split-text">
+          <p>Deliberately made very simple: two switches in series. A key switch arms it and lights the armed status, then a momentary fire button fires the e-match and marks the ignition timestamp in software.</p>
+          <ul class="bullets" role="list">
+            <li>Its own 12 V battery, with no electrical connection to the DAQ. A fault can't reach the DAQ or laptop, and no software bug can fire the motor.</li>
+            <li>The fire button's second pole is electrically isolated and only signals the DAQ. A pull-down resistor ties that DAQ input to GND so a false ignition isn't recorded.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="ts-results">
+      <h3 class="label" id="ts-results">Results</h3>
+      <div class="prose">
+        <p>DAQ enclosure and ignition box built and demoed to potential investors.</p>
+        <p>Video: <a href="https://youtu.be/Teca0_MfHsY" target="_blank" rel="noopener noreferrer">youtu.be/Teca0_MfHsY</a></p>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="ts-change">
+      <h3 class="label" id="ts-change">What I'd change</h3>
+      <ul class="bullets" role="list">
+        <li>Pick an Ethernet-native DAQ from the start. Two USB devices with a 60 ft operator standoff required a USB-over-Ethernet extender, which is only rated to 130 °F, and a sealed box in the desert sun can get hotter than that.</li>
+        <li>The two MCC modules were not DIN rail mountable, so I ended up buying shelf holder L-bars so I could mount them within the enclosure. It worked quite well, but it was very difficult finding the correct part.</li>
+        <li>Replace the round thermocouple panel connectors. They were the weakest part of the box. I don’t think they are truly weatherproof, very difficult to actually wire (very small and finicky), and introduced a bug: touching or moving the thermocouple wire would cause a very sharp spike in the measurement reading. Next time I would use cable glands.</li>
+      </ul>
+    </section>
+  </article>
+
+</main>
+
+<dialog class="zoom" id="zoom" aria-label="Enlarged image">
+  <img id="zoom-img" src="data:," alt="">
+</dialog>
+
+<script>
+(() => {
+  const zoom = document.getElementById("zoom");
+  if (!zoom || typeof zoom.showModal !== "function") return;
+  document.documentElement.classList.add("js");
+  const big = document.getElementById("zoom-img");
+  for (const img of document.querySelectorAll("[data-zoom]")) {
+    img.tabIndex = 0;
+    img.setAttribute("role", "button");
+    img.setAttribute("aria-label", "Enlarge image: " + img.alt);
+    const open = () => {
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
+      zoom.showModal();
+    };
+    img.addEventListener("click", open);
+    img.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
+    });
+  }
+  zoom.addEventListener("click", () => zoom.close());
+})();
+</script>
+</body>
+</html>
