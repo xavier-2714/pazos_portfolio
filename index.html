@@ -361,7 +361,7 @@ a:focus-visible,
     <nav class="cards" aria-label="Projects">
       <a class="card" href="#telemetry-70mm">
         <span class="thumb"><img class="round" src="img/telemetry-70mm-top-copper.jpg" width="900" height="900" alt=""></span>
-        <span class="card-title">Telemetry PCB – 70 mm Rocket</span>
+        <span class="card-title">Spin-Stabilized Telemetry PCB</span>
         <span class="card-text">Ø62 mm, 4-layer board designed to survive 32 rps of spin and 100 g.</span>
       </a>
       <a class="card" href="#telemetry-40mm">
@@ -394,7 +394,7 @@ a:focus-visible,
 
   <article class="sheet" id="telemetry-70mm" aria-labelledby="telemetry-70mm-title">
     <header class="project-head">
-      <h2 id="telemetry-70mm-title">Telemetry PCB – 70 mm Rocket</h2>
+      <h2 id="telemetry-70mm-title">Telemetry PCB – Spin-Stabilized Rocket</h2>
       <p class="meta">iRocket · Summer 2026 · Status: prepared for fabrication</p>
     </header>
 
@@ -407,7 +407,7 @@ a:focus-visible,
     </figure>
 
     <div class="prose">
-      <p>Telemetry board for a 70 mm rocket. It streams GPS, 3-axis acceleration and roll rate to the ground over a 900 MHz radio link, and is designed to survive 32 rps of spin and 100 g of acceleration.</p>
+      <p>Telemetry board for a spin-stabilized rocket. It streams GPS, 3-axis acceleration and roll rate to the ground over a 900 MHz radio link, and is designed to survive 32 rps of spin and 100 g of acceleration.</p>
       <p>I designed this board on my own. I defined the environment it had to survive from publicly available specs for the rocket, chose parts around those limits, did the schematic and 4-layer layout in KiCad, and prepared it for fabrication. It was handed off at fabrication when my internship ended.</p>
     </div>
 
@@ -469,7 +469,7 @@ a:focus-visible,
     </figure>
 
     <div class="prose">
-      <p>Flight board for a 40 mm rocket: GPS, a 6-axis IMU, a barometer and flash logging, with a 900 MHz radio link. Its mission is milder than the 70 mm rocket's (about 17 g peak and minimal spin). I designed it before the 70 mm board, and its MCU, GPS front end, radio and power parts carried over to that design.</p>
+      <p>Flight board for a 40 mm rocket: GPS, a 6-axis IMU, a barometer and flash logging, with a 900 MHz radio link. Its mission is milder than the spin-stabilized rocket's (about 17 g peak and minimal spin). I designed it before the spin-stabilized board, and its MCU, GPS front end, radio and power parts carried over to that design.</p>
       <p>I chose what measurements were needed and what sensors could record them, did the schematic and PCB routing, and prepared it for fabrication. I helped bring the board up, flashing it with STM32CubeMX and a Nucleo as the ST-Link programmer, and started bench testing and distance testing.</p>
     </div>
 
